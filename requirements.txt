@@ -1,0 +1,6 @@
+# Master deps — union of Builder 1 (portfolio) + Builder 2 (LSTM)
+# For minimal installs, use each subfolder's own requirements.txt instead.
+
+numpy>=1.24
+pandas>=2.0
+tensorflow>=2.15

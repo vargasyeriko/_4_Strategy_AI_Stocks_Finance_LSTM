@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+.env
+
+# Jupyter (any depth)
+**/.ipynb_checkpoints/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Optional: large artifacts under Builder 2 (uncomment if needed)
+# _my_builder_2/src_2/saved_models/*.keras
+# _my_builder_2/src_2/*.pkl

@@ -6,7 +6,7 @@ from __future__ import annotations
 from ._0_fns_get_data import sync_raw_pkl
 from ._1_fns_history_by_symbol import hist_summ_pr, stk_ledg_df
 from ._2_gainloss import entry_gl_tb
-from ._3_summary import portf_sum_tb
+from ._3_summary import earn_summ_tb, portf_sum_tb
 
 
 def main() -> None:
@@ -17,24 +17,31 @@ def main() -> None:
 
     gain = entry_gl_tb(hist, df_px)
     final = portf_sum_tb(summ)
+    earn = earn_summ_tb(final)
 
-    print("=== History by symbol (ledger display) ===")
+    print("=== Table: Ledger history by symbol ===")
     if hist.empty:
         print("(no trades)")
     else:
         print(hist.to_string(index=False))
     print()
-    print("=== % Gain/Loss per Entry Point (Split-Adjusted Entry Price vs Split-Adjusted Close) ===")
+    print("=== Table: % gain/loss per entry (split-adjusted entry vs close) ===")
     if gain.empty:
         print("(no BUY rows / no price)")
     else:
         print(gain.to_string(index=False))
     print()
-    print("=== Per ticker: shares | last Close in panel | est. value | net cash flow (ledger) ===")
+    print("=== Table: Per ticker — shares, last close, est. value, net ledger cash flow ===")
     if final.empty:
         print("(no summary)")
     else:
         print(final.to_string(index=False))
+    print()
+    print("=== Table: Portfolio summary (totals and earnings vs ledger) ===")
+    if earn.empty:
+        print("(no portfolio summary)")
+    else:
+        print(earn.to_string(index=False))
 
 
 if __name__ == "__main__":

@@ -11,12 +11,19 @@ builders/
 │   ├── README.md
 │   ├── requirements.txt
 │   └── src_1/
-└── _my_builder_2/              # LSTM strategy pipeline (src_2)
+├── _my_builder_2/              # LSTM strategy pipeline (src_2)
+│   ├── auto.py
+│   ├── README.md
+│   ├── requirements.txt
+│   ├── src_2/
+│   └── …
+└── _my_builder_3/              # Growth / defensive on panel (src_3)
     ├── auto.py
     ├── README.md
     ├── requirements.txt
-    ├── src_2/
-    └── …
+    ├── data/                   # your_data.pkl (panel)
+    ├── src_3/
+    └── notebooks/              # Jupyter + archived ALFA assets (not used by auto.py)
 ```
 
 ## Quick start
@@ -28,7 +35,7 @@ pip install -r requirements.txt
 python auto.py
 ```
 
-You get a menu: **1** = Builder 1 (sync panel + ledger tables), **2** = Builder 2 (train / predict LSTMs).
+You get a menu: **1** = Builder 1 (sync panel + ledger tables), **2** = Builder 2 (train / predict LSTMs), **3** = Builder 3 (growth vs defensive mix; panel in `_my_builder_3/data/`).
 
 ## Direct routing (no menu)
 
@@ -39,9 +46,12 @@ You get a menu: **1** = Builder 1 (sync panel + ledger tables), **2** = Builder 
 | `python auto.py 2 train` | Forwards `train` to Builder 2 |
 | `python auto.py portfolio` | Same as `1` |
 | `python auto.py lstm` | Same as `2` |
+| `python auto.py 3` | Runs `_my_builder_3/auto.py` |
+| `python auto.py 3 summary` | Builder 3 one-shot summary |
+| `python auto.py alfa` | Same as `3` |
 
-Each sub-builder keeps its own `README.md` and optional venv; the master `requirements.txt` here is a **union** of both stacks so one install covers the suite.
+Each sub-builder keeps its own `README.md` and optional venv; the master `requirements.txt` here is a **union** of all stacks so one install covers the suite.
 
 ## Layout note
 
-This folder used to live as two siblings `_my_builder_1` and `_my_builder_2` at the repo root; they are now nested here under **`builders/`** with this master entrypoint.
+Builders 1–2 used to live as siblings at the repo root; they are now nested here under **`builders/`** with this master entrypoint. Builder 3 (formerly `_ALFA_program`) lives as `_my_builder_3/` with notebooks under `notebooks/`.

@@ -1,0 +1,33 @@
+## CHECK DIV WORK
+
+# CHECK with total DIVIDENDS
+import yfinance as yf
+import pandas as pd
+
+# Assuming df_div is preloaded and formatted correctly
+
+# Initialize a cache for dividends to minimize API calls
+dividend_cache = {}
+
+# Function to fetch and cache dividends
+def get_cached_dividends(stock):
+    if stock not in dividend_cache:
+        ticker = yf.Ticker(stock)
+        dividends = ticker.dividends
+        dividends.index = dividends.index.tz_localize(None)  # Ensure timezone-naive
+        dividend_cache[stock] = dividends
+    return dividend_cache[stock]
+
+# Adjusted function to use cached dividends
+def get_dividends(stock, start_date, end_date):
+    dividends = get_cached_dividends(stock)
+    relevant_dividends = dividends[(dividends.index >= start_date) & (dividends.index <= end_date)]
+    return relevant_dividends.sum()
+
+# Calculate total dividends with potential optimizations
+df_div['total_dividends'] = df_div.apply(lambda row: get_dividends(row['Stock'], row['StartDate'], row['EndDate']) * row['units_hold'], axis=1)
+df_div = df_div.sort_values(by=['Stock', 'StartDate', 'EndDate'])
+
+
+print('\n',df_div['total_dividends'].sum()),'\n'
+print(df_div)
